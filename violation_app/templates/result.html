@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detection Result</title>
+</head>
+<body>
+    <h2>Original Image</h2>
+    <img src="{{ uploaded_image.image.url }}" width="400">
+    <h2>Detected Objects</h2>
+    <img src="/static/{{ uploaded_image.detected_image }}" width="400">
+    <br><br>
+    <a href="/">Upload Another Image</a>
+</body>
+</html>
