@@ -8,8 +8,8 @@ import os
 from django.conf import settings
 from violation_app.models import UploadedImage
 from django.core.files import File
-
-
+base_dir = os.path.dirname(os.path.abspath(__file__))
+base_dir = os.path.dirname(base_dir)
 class WeightReader:
     def __init__(self, weight_file):
         
@@ -401,7 +401,7 @@ def draw_boxes(image, boxes, line, labels, obj_thresh, dcnt):
 
     return image
 
-weights_path = "D:\\Niket_doc\\violation_system\\violation_system_proj\\yolov3.weights"
+weights_path = os.path.join(base_dir, "yolov3.weights")
 # set some parameters
 net_h, net_w = 416, 416
 obj_thresh, nms_thresh = 0.5, 0.45

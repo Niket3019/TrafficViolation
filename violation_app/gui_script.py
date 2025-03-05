@@ -11,6 +11,11 @@ django.setup()
 from . import object_detection as od  # Now, this should work
 import imageio
 import cv2
+base_dir = os.path.dirname(os.path.abspath(__file__))
+base_dir = os.path.dirname(base_dir)
+# Define a relative path
+image_dir = os.path.join(base_dir, "Images")
+res_dir = os.path.join(base_dir, "Resources")
 
 class Window(Frame):
     def __init__(self, master=None):
@@ -56,10 +61,10 @@ class Window(Frame):
         fps = reader.get_meta_data()['fps'] 
 
         ret, image = cap.read()
-        
-        cv2.imwrite('D:\\Niket_doc\\violation_system\\violation_system_proj\\Images\\preview.jpg', image)
+        image_path = os.path.join(image_dir, "preview.jpg")
+        cv2.imwrite(image_path, image)
 
-        self.show_image('D:\\Niket_doc\\violation_system\\violation_system_proj\\Images\\preview.jpg')
+        self.show_image(image_path)
 
 
     def show_image(self, frame):
@@ -98,10 +103,10 @@ class Window(Frame):
             #show created virtual line
             print(self.line)
             print(self.rect)
-            img = cv2.imread('D:\\Niket_doc\\violation_system\\violation_system_proj\\Images\\preview.jpg')
+            img = cv2.imread(os.path.join(image_dir, "preview.jpg"))
             cv2.line(img, self.line[0], self.line[1], (0, 255, 0), 3)
-            cv2.imwrite('D:\\Niket_doc\\violation_system\\violation_system_proj\\Images\\copy.jpg', img)
-            self.show_image('D:\\Niket_doc\\violation_system\\violation_system_proj\\Images\\copy.jpg')
+            cv2.imwrite(os.path.join(image_dir, "copy.jpg"), img)
+            self.show_image(os.path.join(image_dir, "copy.jpg"))
 
             ## for demonstration
             # (rxmin, rymin) = self.rect[0]
@@ -189,7 +194,7 @@ class Window(Frame):
 
         reader = imageio.get_reader(video_src)
         fps = reader.get_meta_data()['fps']    
-        writer = imageio.get_writer('D:\\Niket_doc\\violation_system\\violation_system_proj\\Resources\\output\\output.mp4', fps = fps)
+        writer = imageio.get_writer(os.path.join(res_dir, "output", "output.mp4"), fps = fps)
             
         j = 1
         while True:
