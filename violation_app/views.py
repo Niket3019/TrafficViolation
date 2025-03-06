@@ -161,3 +161,6 @@ def open_gui(request):
         return JsonResponse({"message": "GUI Opened Successfully!"})
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
+    
+def index(request):
+    return render(request, "index.html")

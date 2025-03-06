@@ -15,6 +15,8 @@ urlpatterns = [
     path("update_grievance_status/", views.update_grievance_status, name="update_grievance_status"),
     path("open-gui/", views.open_gui, name="open_gui"),
     path("add-violation/", views.add_violation_view, name="add_violation"),
+    path("", views.index, name=""),
+
 ]
 
 if settings.DEBUG:
