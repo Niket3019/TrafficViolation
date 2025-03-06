@@ -17,6 +17,7 @@ import subprocess
 import sys
 from django.http import JsonResponse
 from violation_app.services import email
+from django.urls import reverse
 
 @csrf_exempt
 def register_view(request):
@@ -112,10 +113,16 @@ def send_violation_email(request, violation_id):
     violation = get_object_or_404(Violation, id=violation_id)
     email_id = violation.user.email
     subject = 'Traffic Violation Notice'
-    message = f"Dear {violation.user.username},\nYou have a violation for {violation.violation_type}. Please pay ₹{violation.fine_amount}."
-    email.send_mail_admin(email_id,subject,message)
+    login_url = request.build_absolute_uri(reverse('login'))  # Generates the absolute login URL
+    message = (f"Dear {violation.user.username},\n"
+               f"You have a violation for {violation.violation_type}. "
+               f"Please pay ₹{violation.fine_amount}.\n\n"
+               f"To manage your violations, please log in: {login_url}")
+    
+    email.send_mail_admin(email_id, subject, message)
     messages.success(request, f"Email sent successfully to {email_id}")
     return redirect("admin_dashboard")
+
 
 @csrf_exempt
 @login_required
